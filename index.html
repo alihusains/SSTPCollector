@@ -19,9 +19,9 @@ tr:nth-child(odd){ background:#f3f3f3; }
 <body>
 
 <div class="toolbar">
-  <a href="https://twitter.com/yebekhe" target="_blank">Twitter</a>
+  <!-- <a href="https://twitter.com/yebekhe" target="_blank">Twitter</a> -->
   <h1>SSTP Collector</h1>
-  <a href="https://github.com/yebekhe" target="_blank">GitHub</a>
+  <a href="https://github.com/alihusains" target="_blank">GitHub</a>
 </div>
 
 <table id="vpnTable">
@@ -39,7 +39,7 @@ tr:nth-child(odd){ background:#f3f3f3; }
 <tbody></tbody>
 </table>
 
-<div class="footbar">YeBeKhe © 2023</div>
+<div class="footbar">Ali Husain Sorathiya © 2026</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -92,6 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (openvpn[0]) {
 
 // https://130.158.75.39/en/do_openvpn.aspx?fqdn=vpn952825947.opengw.net&ip=124.51.253.126&tcp=1419&udp=1819&sid=1770288174693&hid=24013649
+
+          // http://130.158.75.39/do_openvpn.aspx?fqdn=public-vpn-129.opengw.net&ip=219.100.37.103&tcp=443&udp=0&sid=1770286398267&hid=15094319
           
           const url = "https://130.158.75.39/en" + openvpn[0];
           tdOVPN.innerHTML = `<a href="${url}" target="_blank">${openvpn[1] || "OpenVPN Config"}</a><br>${joinBlock(openvpn.slice(2))}`;
