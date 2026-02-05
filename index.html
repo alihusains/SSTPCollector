@@ -90,7 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const openvpn = row[6] || [];
         const tdOVPN = document.createElement("td");
         if (openvpn[0]) {
-          const url = "http://130.158.75.39/" + openvpn[0];
+
+// https://130.158.75.39/en/do_openvpn.aspx?fqdn=vpn952825947.opengw.net&ip=124.51.253.126&tcp=1419&udp=1819&sid=1770288174693&hid=24013649
+          
+          const url = "https://130.158.75.39/en" + openvpn[0];
           tdOVPN.innerHTML = `<a href="${url}" target="_blank">${openvpn[1] || "OpenVPN Config"}</a><br>${joinBlock(openvpn.slice(2))}`;
         }
         tr.appendChild(tdOVPN);
