@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // http://130.158.75.39/do_openvpn.aspx?fqdn=public-vpn-129.opengw.net&ip=219.100.37.103&tcp=443&udp=0&sid=1770286398267&hid=15094319
           
-          const url = "https://130.158.75.39/en" + openvpn[0];
+          const url = "https://130.158.75.39/en/" + openvpn[0];
           tdOVPN.innerHTML = `<a href="${url}" target="_blank">${openvpn[1] || "OpenVPN Config"}</a><br>${joinBlock(openvpn.slice(2))}`;
         }
         tr.appendChild(tdOVPN);
