@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <title>SSTP Collector</title>
@@ -166,4 +166,128 @@
               }).catch(error => console.error(error));
       </script>
   </body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SSTP Collector</title>
+  <style>
+    body { background-color: #f1f1f1; color: #333; font-family: Arial, sans-serif; margin: 0; }
+    h1 { font-family: 'Open Sans', sans-serif; }
+
+    table {
+      border-collapse: collapse;
+      margin: 120px auto 40px auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      background-color: #fff;
+    }
+
+    th, td { border: 1px solid #ccc; padding: 10px; }
+    th { background-color: #333; color: #fff; text-align: left; }
+    tr:nth-child(odd) { background-color: #f3f3f3; }
+    tr:hover { background-color: #e8e8e8; }
+
+    .toolbar {
+      background-color: #333;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1;
+      color: white;
+    }
+
+    .toolbar a { color: #fff; text-decoration: none; font-size: 20px; font-weight: bold; }
+
+    .footbar {
+      text-align: center;
+      background-color: #333;
+      padding: 10px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="toolbar">
+  <a href="https://twitter.com/yebekhe" target="_blank">Twitter</a>
+  <h1>SSTP Collector</h1>
+  <a href="https://github.com/yebekhe" target="_blank">GitHub</a>
+</div>
+
+<table id="myTable">
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>DDNS / IP</th>
+      <th>VPN Sessions</th>
+      <th>Line Quality</th>
+      <th>SSL-VPN</th>
+      <th>MS-SSTP</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<div class="footbar">YeBeKhe © 2023</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const tableBody = document.querySelector("#myTable tbody");
+
+  fetch("json/configs.json")
+    .then(res => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(data => {
+      if (!Array.isArray(data)) throw new Error("JSON is not an array");
+
+      data.forEach(item => {
+        if (!Array.isArray(item)) return;
+
+        // Remove unwanted indexes safely
+        [8, 5].forEach(i => { if (item[i]) delete item[i]; });
+
+        if (item[4] && item[4][0] === "SSL-VPN") item[4].shift();
+        if (item[7] && item[7][0] === "MS-SSTP") item[7].shift();
+
+        if (item.length > 6) item.splice(6, 1);
+
+        if (item[0] && item[0][0] && item[0][0].startsWith("../images/flags/")) {
+          item[0][0] = "https://www.vpngate.net/" + item[0][0].slice(3);
+        }
+
+        const row = document.createElement("tr");
+
+        item.forEach((value, index) => {
+          const cell = document.createElement("td");
+
+          if (index === 0 && value && value[1]) {
+            cell.textContent = value[1];
+          } else if (Array.isArray(value)) {
+            cell.innerHTML = value.filter(v => v).join("<br>");
+          } else {
+            cell.textContent = value || "";
+          }
+
+          row.appendChild(cell);
+        });
+
+        tableBody.appendChild(row);
+      });
+    })
+    .catch(err => {
+      tableBody.innerHTML = `<tr><td colspan="6">Failed to load configs: ${err.message}</td></tr>`;
+      console.error(err);
+    });
+});
+</script>
+
+</body>
 </html>
